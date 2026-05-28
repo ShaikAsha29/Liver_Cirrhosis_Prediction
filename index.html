@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirrhosis Prediction System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Cirrhosis Prediction System</h1>
+            <p class="subtitle">Machine Learning-Based Liver Disease Analysis</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Input Form Section -->
+            <div class="card">
+                <h2>Patient Information</h2>
+                <form id="predictionForm">
+                    <div class="form-grid">
+                        <!-- Basic Information -->
+                        <div class="form-group">
+                            <label for="age">Age (years):</label>
+                            <input type="number" id="age" name="age" min="0" max="120" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sex">Sex:</label>
+                            <select id="sex" name="sex" required>
+                                <option value="">Select</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="drug">Drug:</label>
+                            <select id="drug" name="drug" required>
+                                <option value="">Select</option>
+                                <option value="D-penicillamine">D-penicillamine</option>
+                                <option value="Placebo">Placebo</option>
+                            </select>
+                        </div>
+
+                        <!-- Clinical Symptoms -->
+                        <div class="form-group">
+                            <label for="ascites">Ascites:</label>
+                            <select id="ascites" name="ascites" required>
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="hepatomegaly">Hepatomegaly:</label>
+                            <select id="hepatomegaly" name="hepatomegaly" required>
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="spiders">Spiders:</label>
+                            <select id="spiders" name="spiders" required>
+                                <option value="">Select</option>
+                                <option value="Y">Yes</option>
+                                <option value="N">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edema">Edema:</label>
+                            <select id="edema" name="edema" required>
+                                <option value="">Select</option>
+                                <option value="N">No</option>
+                                <option value="S">Slight</option>
+                                <option value="Y">Yes</option>
+                            </select>
+                        </div>
+
+                        <!-- Lab Values -->
+                        <div class="form-group">
+                            <label for="bilirubin">Bilirubin (mg/dL):</label>
+                            <input type="number" id="bilirubin" name="bilirubin" step="0.1" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cholesterol">Cholesterol (mg/dL):</label>
+                            <input type="number" id="cholesterol" name="cholesterol" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="albumin">Albumin (g/dL):</label>
+                            <input type="number" id="albumin" name="albumin" step="0.1" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="copper">Copper (µg/day):</label>
+                            <input type="number" id="copper" name="copper" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="alk_phos">Alkaline Phosphatase:</label>
+                            <input type="number" id="alk_phos" name="alk_phos" step="0.1" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sgot">SGOT:</label>
+                            <input type="number" id="sgot" name="sgot" step="0.1" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tryglicerides">Triglycerides:</label>
+                            <input type="number" id="tryglicerides" name="tryglicerides" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="platelets">Platelets:</label>
+                            <input type="number" id="platelets" name="platelets" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prothrombin">Prothrombin (sec):</label>
+                            <input type="number" id="prothrombin" name="prothrombin" step="0.1" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stage">Stage:</label>
+                            <select id="stage" name="stage" required>
+                                <option value="">Select</option>
+                                <option value="1">Stage 1</option>
+                                <option value="2">Stage 2</option>
+                                <option value="3">Stage 3</option>
+                                <option value="4">Stage 4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">Predict Status</button>
+                        <button type="button" class="btn btn-secondary" id="resetBtn">Reset Form</button>
+                        <button type="button" class="btn btn-info" id="sampleBtn">Load Sample Data</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div class="card" id="resultsCard" style="display: none;">
+                <h2>Prediction Results</h2>
+                <div id="predictionResult" class="result-content">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="card">
+                <h2>Dataset Statistics</h2>
+                <div id="statsContent" class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalRecords">-</div>
+                        <div class="stat-label">Total Records</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgAge">-</div>
+                        <div class="stat-label">Average Age</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="maleCount">-</div>
+                        <div class="stat-label">Male Patients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="femaleCount">-</div>
+                        <div class="stat-label">Female Patients</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Info Section -->
+            <div class="card">
+                <h2>Model Information</h2>
+                <div class="model-info">
+                    <p><strong>Algorithm:</strong> XGBoost Classifier</p>
+                    <p><strong>Features:</strong> 17 clinical and laboratory parameters</p>
+                    <p><strong>Classes:</strong> C (Censored), CL (Censored due to liver transplant), D (Death)</p>
+                    <p><strong>Preprocessing:</strong> SMOTE for class imbalance, Label Encoding for categorical variables</p>
+                    <p><strong>Model Parameters:</strong></p>
+                    <ul>
+                        <li>N_estimators: 200</li>
+                        <li>Learning Rate: 0.05</li>
+                        <li>Max Depth: 4</li>
+                        <li>Subsample: 0.8</li>
+                        <li>Colsample_bytree: 0.8</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Cirrhosis Prediction System | Powered by Machine Learning</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
